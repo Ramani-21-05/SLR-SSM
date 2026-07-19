@@ -1,0 +1,28 @@
+data:
+  raw_dir: datasets/raw
+  mediapipe_dir: datasets/mediapipe
+  processed_dir: datasets/processed
+  vocab_size: 1296          # e.g. PHOENIX14-style character/gloss vocab + 1 for CTC blank
+  blank_id: 0
+
+model:
+  rgb_dim: 256
+  stream_dim: 64
+  d_model: 512
+  mamba_depth_per_level: 2
+  pretrained_backbone: true
+
+train:
+  batch_size: 2              # matches STNet's own memory-constrained batch size for fair comparison
+  epochs: 60
+  lr: 0.0001
+  weight_decay: 0.0001
+  optimizer: adam
+  lr_schedule: cosine
+  num_workers: 4
+  checkpoint_dir: checkpoints
+  log_every: 20
+
+eval:
+  decode: greedy             # swap to "beam" once a beam search decoder is added
+  beam_width: 10
